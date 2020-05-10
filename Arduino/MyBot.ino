@@ -22,7 +22,7 @@
 #define Echo_Centro     9             //Pino do echo de distância (Central).
 
 //LCD (Cristal líquido)
-#define PIN_SCLK        38            //LCD pino de clock
+#define PIN_SCLK        38            //LCD pino de clock.
 #define PIN_SDIN        36            //LCD pino DIN
 #define PIN_DC          34            //LCD pino DC
 #define PIN_RESET       32            //LCD pino de reset
