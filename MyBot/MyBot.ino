@@ -11,18 +11,18 @@
 // ---------------------------- Definação da pinagem --------------------------
 
 //Sensor de voltagem
-#define PinBattery      A0            //Pino do Sensor de Voltagem (Bateria - 11.1V).
+#define PinBattery      A0            //Pino do Sensor de Voltagem (Bateria - 11.1V)
 
 //Sensores de distância
-#define Trigger_Esq     3             //Pino do trigger de distância (Esquerda).
-#define Echo_Esq        5             //Pino do echo de distância (Esquerda).
-#define Trigger_Dir     3             //Pino do trigger de distância (Direita).
-#define Echo_Dir        7             //Pino do echo de distância (Direita).
-#define Trigger_Centro  3             //Pino do trigger de distância (Central).
-#define Echo_Centro     9             //Pino do echo de distância (Central).
+#define Trigger_Esq     3             //Pino do trigger de distância (Esquerda)
+#define Echo_Esq        5             //Pino do echo de distância (Esquerda)
+#define Trigger_Dir     3             //Pino do trigger de distância (Direita)
+#define Echo_Dir        7             //Pino do echo de distância (Direita)
+#define Trigger_Centro  3             //Pino do trigger de distância (Central)
+#define Echo_Centro     9             //Pino do echo de distância (Central)
 
 //LCD (Cristal líquido)
-#define PIN_SCLK        38            //LCD pino de clock.
+#define PIN_SCLK        38            //LCD pino de clock
 #define PIN_SDIN        36            //LCD pino DIN
 #define PIN_DC          34            //LCD pino DC
 #define PIN_RESET       32            //LCD pino de reset
@@ -35,37 +35,37 @@
 #define ServoVer        13            //Pino do servo vertical
 
 //Motores
-#define AvancaMD        A9            //Pino avança motor direito.
-#define AvancaME        A8            //Pino avança motor esquerdo.
-#define RetrocedeMD     A10           //Pino retrocede motor direito.
-#define RetrocedeME     A11           //Pino retrocede motor esquerdo.
+#define AvancaMD        A9            //Pino avança motor direito
+#define AvancaME        A8            //Pino avança motor esquerdo
+#define RetrocedeMD     A10           //Pino retrocede motor direito
+#define RetrocedeME     A11           //Pino retrocede motor esquerdo
 
 //LEDS (Olhos)
-#define dataPin         49            //Pino para alterar os dados.
-#define csPin           40            //Pino para selecionar o device.
-#define clockPin        47            //Pino de clock dos olhos.
+#define dataPin         49            //Pino para alterar os dados
+#define csPin           40            //Pino para selecionar o device
+#define clockPin        47            //Pino de clock dos olhos
 
 //Farol
-#define Farol           23            //Pino para ligar o farol.
+#define Farol           23            //Pino para ligar o farol
 
 //LCD
-#define backLight_LCD   29            //Backlight do LCD.
+#define backLight_LCD   29            //Backlight do LCD
 
 //Desligar robô
-#define Desligar        25            //Pino para desligar.
+#define Desligar        25            //Pino para desligar
 
 //Sensor
-Ultrasonic sensorEsq(Trigger_Esq, Echo_Esq);            // Sensor Esquerdo.
-Ultrasonic sensorCentro(Trigger_Centro, Echo_Centro);   // Sensor Central.
-Ultrasonic sensorDir(Trigger_Dir, Echo_Dir);            // Sensor Direito.
+Ultrasonic sensorEsq(Trigger_Esq, Echo_Esq);            // Sensor Esquerdo
+Ultrasonic sensorCentro(Trigger_Centro, Echo_Centro);   // Sensor Central
+Ultrasonic sensorDir(Trigger_Dir, Echo_Dir);            // Sensor Direito
 
 //Cartão de memória
-File root;                        //Caminho do SD Card.
+File root;                        //Caminho do SD Card
 static const byte iconLin = 82;   //Linha da bateria
 static const byte iconCol = 40;   //Coluna da bateria
 
 //Sensor de luminosidade
-int LDRTime;                      //Tempo para repetir sobre a luminosidade.
+int LDRTime;                      //Tempo para repetir sobre a luminosidade
 
 //Servo servoHor;
 Servo servoVer;
@@ -74,20 +74,20 @@ Servo servoVer;
 TMRpcm audioCartaoSD;
 
 //Sensor central
-int disAlerta_Centro = 20;         //Distância de alerta de obstáculo central.
+int disAlerta_Centro = 20;         //Distância de alerta de obstáculo central
 int disCentro;
 
 //Sensor direita
-int disAlerta_Dir = 15;            //Distância de alerta de obstáculo da direita.
+int disAlerta_Dir = 15;            //Distância de alerta de obstáculo da direita
 int disDir;
 
 //Sensor esquerda
-int disAlerta_Esq = 15;            //Distância de alerta de obstáculo da esquerda.
+int disAlerta_Esq = 15;            //Distância de alerta de obstáculo da esquerda
 int disEsq;
 
 //Display Sensor Voltagem
-double voltagePorc = 0.0;           //% da vontagem medida.
-float sensorValor = 0.0f;           //Voltagem do sensor.
+double voltagePorc = 0.0;           //% da vontagem medida
+float sensorValor = 0.0f;           //Voltagem do sensor
 
 //Display LCD
 PCD8544 lcd(PIN_SCLK,PIN_SDIN,PIN_DC,PIN_RESET,PIN_SCE);
@@ -105,7 +105,7 @@ void setup() {
 
   //Servo.
   servoVer.attach(ServoVer);
-  servoVer.write(90);            //Posição inicial.
+  servoVer.write(90);            //Posição inicial
   delay(1000);
 
   //Configuração do alto-falante
@@ -202,18 +202,18 @@ void loop() {
   Serial.print("Distância direita - ");
   Serial.println(disDir);
 
-  if (disCentro < disAlerta_Centro){         //Obstáculo à frente.
+  if (disCentro < disAlerta_Centro){         //Obstáculo à frente
     fn_PararMotores();
     AbrirSDCard(root, "FRENTE~1.WAV");
-  } else if (disEsq < disAlerta_Esq){        //Vira à direita.
+  } else if (disEsq < disAlerta_Esq){        //Vira à direita
     fn_PararMotores();
     AbrirSDCard(root, "ESQUER~1.WAV");
     fn_VirarDir();
-  } else if (disDir < disAlerta_Dir){        //Vira à esquerda.
+  } else if (disDir < disAlerta_Dir){        //Vira à esquerda
     fn_PararMotores();
     AbrirSDCard(root, "DIREIT~1.WAV");
     fn_VirarEsq();
-  }else{                                     //Continua avançando.
+  }else{                                     //Continua avançando
     fn_AvancarMotores();     
   }
     
@@ -243,7 +243,7 @@ void DesligarRobo(){
   Serial.println("Desligando o robô!");
 
   //Desligar robô.
-  digitalWrite(Desligar, HIGH); // ### Trocar o transistor por um PNP.
+  digitalWrite(Desligar, HIGH); // ### Trocar o transistor por um PNP
 }
 
 //-----------------------------------------------------------------------------
@@ -274,9 +274,9 @@ void AbrirSDCard(File dir, char arquivo[]){
 //-----------------------------------------------------------------------------
 void AbrirSDImagem(File dir, char arquivo[]){ 
 
-  int QtdeChar = 820;              // Quantidade máxima de itens na matriz para caber na tela.
-  char matriz1[QtdeChar] = {};     // Matriz temporária para conveter String em HEX.
-  byte matriz2[QtdeChar] = {};     // Matriz para apresentar na tela do LCD.
+  int QtdeChar = 820;              // Quantidade máxima de itens na matriz para caber na tela
+  char matriz1[QtdeChar] = {};     // Matriz temporária para conveter String em HEX
+  byte matriz2[QtdeChar] = {};     // Matriz para apresentar na tela do LCD
   String recebido;
   int ContMatrizLCD = 0;
 
