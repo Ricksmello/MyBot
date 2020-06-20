@@ -44,23 +44,21 @@ String  WebPage =  "<!DOCTYPE html>\n";
         WebPage +=  "<html>\n";
           WebPage += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n";
           WebPage += "<head>\n";
-            WebPage += "<title>MyBot Camera</title>";
-            WebPage += "<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}\n";
-           //   WebPage += "body{margin-top: 50px;} h1 {color: #444444} h3 {color: #444444;margin-bottom: 50px;}\n";
-              WebPage += "img{transform: rotate(-90deg)}</style>\n";
+            WebPage += "<title>MyBot Camera</title><style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}}</style>";
+            WebPage += "<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}}</style>\n";
           WebPage += "</head>\n";
           WebPage += "<body>\n";
-            WebPage += "<table>\n";
-              WebPage += "<tr><td><h1>Camera - MyBot</h1></td></tr>\n;";
+            WebPage += "<table align='center'>";
+              WebPage += "<tr><td><h1>Camera - MyBot</h1></td></tr>\n";
               WebPage += "<tr><td><h3>Real Time</h3></td></tr>\n";
               WebPage += "<tr><td>\n";
-                WebPage += "<p><img id='a' src='/camera' onload='this.style.display=\"initial\"; var b = document.getElementById(\"b\"); b.style.display=\"none\"; b.src=\"camera?\"+Date.now(); '>\n";
-                WebPage += "<img id='b' style='display:none' src='/camera' onload='this.style.display=\"initial\"; var a = document.getElementById(\"a\"); a.style.display=\"none\"; a.src=\"camera?\"+Date.now(); '></p>\n";
+                WebPage += "<p><img id='a' style=height:480px; width:640px; src='/camera' onload='this.style.display=\"initial\";var b = document.getElementById(\"b\"); b.style.display=\"none\"; b.src=\"camera?\"+Date.now();'>";
+                WebPage += "<img id='b' style=height:480px; width:640px; style='display:none' src='/camera' onload='this.style.display=\"initial\"; var a = document.getElementById(\"a\"); a.style.display=\"none\"; a.src=\"camera?\"+Date.now();'></p>";
               WebPage += "</td></tr>\n";
             WebPage += "</table>\n";
          WebPage += "</body>\n";   
         WebPage +=  "</html>\n";
-  
+
   WiFiClient client = server.available();
   if (client) 
   {
