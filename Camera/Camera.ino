@@ -44,8 +44,8 @@ String  WebPage =  "<!DOCTYPE html>\n";
         WebPage +=  "<html>\n";
           WebPage += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n"; 
           WebPage += "<head>\n";
-            WebPage += "<title>MyBot Camera</title><style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}}</style>";
-            WebPage += "<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}}</style>\n"; //Se necessário: img{transform: rotate(-90deg)}
+            WebPage += "<title>MyBot Camera</title><style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}</style>";
+            WebPage += "<style>html {font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}</style>\n"; //Se necessário dentro do Style: img{transform: rotate(-90deg)}
           WebPage += "</head>\n";
           WebPage += "<body>\n";
             WebPage += "<table align='center'>";
