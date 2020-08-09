@@ -36,8 +36,9 @@
 
 //Motores
 #define AvancaMD        A9            //Pino avança motor direito.
-#define AvancaME        A8            //Pino avança motor esquerdo.
 #define RetrocedeMD     A10           //Pino retrocede motor direito.
+
+#define AvancaME        A8            //Pino avança motor esquerdo.
 #define RetrocedeME     A11           //Pino retrocede motor esquerdo.
 
 //LEDS (Olhos)
@@ -136,7 +137,7 @@ void setup() {
 
   //Versão.
   Serial.println("############################################################");
-  Serial.println("#          Versão 16.8        Data: 18/06/2020             #");
+  Serial.println("#          Versão 16.9        Data: 08/08/2020             #");
   Serial.println("############################################################");
 
   //Saudações
@@ -149,6 +150,13 @@ void setup() {
 //------------------------------------------------------------------------------------------------------//
 
 void loop() {
+
+  //-------------------------------- Verifica bateria ----------------------------------------------------
+  //Battery LiPO (11.1V)
+  voltagePorc = fn_MedirTensao(PinBattery);
+  lcd.setCursor(0, 1);
+  IconeBateria(voltagePorc);
+  Serial.println("############################################################");
 
   //------------------------------- Sensor de luminosidade -----------------------------------------------
   int LDR = analogRead(A15);
@@ -178,14 +186,7 @@ void loop() {
     digitalWrite(backLight_LCD, LOW);
   }
 
-  //-------------------------------- Verifica bateria ----------------------------------------------------
-  //Battery LiPO (11.1V)
-  voltagePorc = fn_MedirTensao(PinBattery);
-  lcd.setCursor(0, 1);
-  IconeBateria(voltagePorc);
-  Serial.println("############################################################");
-
- //-------------------------------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------------------------------
 
   //-------------------------------- Verifica obstáculo ---------------------------------------------------
 
@@ -195,26 +196,31 @@ void loop() {
   delay(10);
   disDir = sensorDir.read();
   delay(10);
-  
-  Serial.print("Distância centro - ");
-  Serial.println(disCentro);
+
   Serial.print("Distância esquerda - ");
   Serial.println(disEsq);
+  Serial.print("Distância centro - ");
+  Serial.println(disCentro);
   Serial.print("Distância direita - ");
   Serial.println(disDir);
 
-  if (disCentro < disAlerta_Centro){         //Obstáculo à frente.
+  if (disCentro < disAlerta_Centro){          //Obstáculo à frente.
     fn_PararMotores();
     AbrirSDCard(root, "FRENTE~1.WAV");
-  } else if (disEsq < disAlerta_Esq){        //Vira à direita.
+    if (disEsq < disDir){
+      fn_VirarDir();                          //Vira à direita se tiver mais espaço. 
+    }else{
+      fn_VirarEsq();                          //Vira à esquerda se tiver mais espaço. 
+    }
+  } else if (disEsq < disAlerta_Esq){         //Vira à direita.
     fn_PararMotores();
     AbrirSDCard(root, "ESQUER~1.WAV");
     fn_VirarDir();
-  } else if (disDir < disAlerta_Dir){        //Vira à esquerda.
+  } else if (disDir < disAlerta_Dir){         //Vira à esquerda.
     fn_PararMotores();
     AbrirSDCard(root, "DIREIT~1.WAV");
     fn_VirarEsq();
-  }else{                                     //Continua avançando.
+  }else{                                      //Continua avançando.
     fn_AvancarMotores();     
   }
     
@@ -363,6 +369,7 @@ void fn_AvancarMotores(){
     analogWrite(RetrocedeME, 0);  
     analogWrite(AvancaMD, 255);     
     analogWrite(AvancaME, 255);
+    delay(3000);
 }
 
 //-----------------------------------------------------------------------------
@@ -380,6 +387,7 @@ void fn_PararMotores (){
     analogWrite(AvancaME, 0);      
     analogWrite(RetrocedeMD, 0);    
     analogWrite(RetrocedeME, 0);
+    delay(100);
 }
 
 //-----------------------------------------------------------------------------
@@ -470,7 +478,7 @@ void fn_VirarEsq(){
 // Retorno: Não há.
 //-----------------------------------------------------------------------------
 void IconeBateria(int valor){
-  if (valor == 10){
+  if (valor >= 10){
     AbrirSDImagem(root, "100.txt"); 
   }else if ((valor <10) and (valor >= 9)){
     AbrirSDImagem(root, "90.txt"); 
