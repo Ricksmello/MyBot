@@ -102,6 +102,7 @@ void setup() {
   Serial.begin(9600);
 
   //Manter o robô ligado.
+  pinMode(Desligar, OUTPUT);
   digitalWrite(Desligar, LOW);     
 
   //Servo.
@@ -137,7 +138,7 @@ void setup() {
 
   //Versão.
   Serial.println("############################################################");
-  Serial.println("#          Versão 16.9        Data: 08/08/2020             #");
+  Serial.println("#          Versão 16.8        Data: 19/11/2020             #");
   Serial.println("############################################################");
 
   //Saudações
@@ -253,6 +254,20 @@ void DesligarRobo(){
   digitalWrite(Desligar, HIGH); //Transistor PNP.
 
 }
+
+//-----------------------------------------------------------------------------
+// Objetivo: Informar que a bateria está boa para funcionar.
+// Parâmetros: Não há.
+// Retorno: Não há.
+//-----------------------------------------------------------------------------
+//void LigarRobo(){  
+   
+  //Serial.println("Ligando o robô!");
+
+  //Ligar robô.
+  //digitalWrite(Desligar, LOW); //Transistor PNP.
+
+//}
 
 //-----------------------------------------------------------------------------
 // Objetivo: Abrir SD Card e tocar arquivo.
@@ -480,14 +495,19 @@ void fn_VirarEsq(){
 void IconeBateria(int valor){
   if (valor >= 10){
     AbrirSDImagem(root, "100.txt"); 
+    //LigarRobo();
   }else if ((valor <10) and (valor >= 9)){
     AbrirSDImagem(root, "90.txt"); 
+    //LigarRobo();
   }else if ((valor < 9) and (valor >= 8)){
     AbrirSDImagem(root, "80.txt"); 
+    //LigarRobo();
   }else if ((valor < 8) and (valor >= 7)){
     AbrirSDImagem(root, "70.txt"); 
+    //LigarRobo();
   }else if ((valor < 7) and (valor >= 6)){
     AbrirSDImagem(root, "60.txt"); 
+    //LigarRobo();
   }else if ((valor < 6) and (valor >= 5)){
     AbrirSDImagem(root, "50.txt"); 
     DesligarRobo();
@@ -503,7 +523,7 @@ void IconeBateria(int valor){
   }else if ((valor < 2) and (valor >= 1)){
     AbrirSDImagem(root, "10.txt"); 
     DesligarRobo();
-  }else if (valor <= 1){
+  }else{
     AbrirSDImagem(root, "00.txt");
     DesligarRobo();
   }
