@@ -52,9 +52,6 @@
 //LCD
 #define backLight_LCD   29            //Backlight do LCD.
 
-//Desligar robô
-#define Desligar        25            //Pino para desligar.
-
 //Sensor
 Ultrasonic sensorEsq(Trigger_Esq, Echo_Esq);            // Sensor Esquerdo.
 Ultrasonic sensorCentro(Trigger_Centro, Echo_Centro);   // Sensor Central.
@@ -101,10 +98,6 @@ void setup() {
 
   Serial.begin(9600);
 
-  //Manter o robô ligado.
-  pinMode(Desligar, OUTPUT);
-  digitalWrite(Desligar, LOW);     
-
   //Servo.
   servoVer.attach(ServoVer);
   servoVer.write(90);            //Posição inicial.
@@ -138,7 +131,7 @@ void setup() {
 
   //Versão.
   Serial.println("############################################################");
-  Serial.println("#          Versão 16.8        Data: 19/11/2020             #");
+  Serial.println("#          Versão 16.10       Data: 21/11/2020             #");
   Serial.println("############################################################");
 
   //Saudações
@@ -238,36 +231,6 @@ void loop() {
 }
 
 //------------------------------------------ FUNÇÕES --------------------------------------------
-
-//-----------------------------------------------------------------------------
-// Objetivo: Informar que a bateria está acabando e desligar.
-// Parâmetros: Não há.
-// Retorno: Não há.
-//-----------------------------------------------------------------------------
-void DesligarRobo(){  
-   
-  fn_Olhar(sono, 8, 600);
-
-  Serial.println("Desligando o robô!");
-
-  //Desligar robô.
-  digitalWrite(Desligar, HIGH); //Transistor PNP.
-
-}
-
-//-----------------------------------------------------------------------------
-// Objetivo: Informar que a bateria está boa para funcionar.
-// Parâmetros: Não há.
-// Retorno: Não há.
-//-----------------------------------------------------------------------------
-//void LigarRobo(){  
-   
-  //Serial.println("Ligando o robô!");
-
-  //Ligar robô.
-  //digitalWrite(Desligar, LOW); //Transistor PNP.
-
-//}
 
 //-----------------------------------------------------------------------------
 // Objetivo: Abrir SD Card e tocar arquivo.
@@ -495,36 +458,25 @@ void fn_VirarEsq(){
 void IconeBateria(int valor){
   if (valor >= 10){
     AbrirSDImagem(root, "100.txt"); 
-    //LigarRobo();
   }else if ((valor <10) and (valor >= 9)){
     AbrirSDImagem(root, "90.txt"); 
-    //LigarRobo();
   }else if ((valor < 9) and (valor >= 8)){
     AbrirSDImagem(root, "80.txt"); 
-    //LigarRobo();
   }else if ((valor < 8) and (valor >= 7)){
     AbrirSDImagem(root, "70.txt"); 
-    //LigarRobo();
   }else if ((valor < 7) and (valor >= 6)){
     AbrirSDImagem(root, "60.txt"); 
-    //LigarRobo();
   }else if ((valor < 6) and (valor >= 5)){
     AbrirSDImagem(root, "50.txt"); 
-    DesligarRobo();
   }else if ((valor < 5) and (valor >= 4)){
     AbrirSDImagem(root, "40.txt"); 
-    DesligarRobo();
   }else if ((valor < 4) and (valor >= 3)){
     AbrirSDImagem(root, "30.txt"); 
-    DesligarRobo();
   }else if ((valor < 3) and (valor >= 2)){
     AbrirSDImagem(root, "20.txt"); 
-    DesligarRobo();
   }else if ((valor < 2) and (valor >= 1)){
     AbrirSDImagem(root, "10.txt"); 
-    DesligarRobo();
   }else{
     AbrirSDImagem(root, "00.txt");
-    DesligarRobo();
   }
 }
